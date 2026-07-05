@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/lenis@1.1.1/dist/lenis.css">
   <style>
     * {
       margin: 0;
@@ -14,8 +15,24 @@
       box-sizing: border-box;
     }
 
-    html {
-      scroll-behavior: smooth;
+    html.lenis, html.lenis body {
+      height: auto;
+    }
+
+    .lenis.lenis-smooth {
+      scroll-behavior: auto !important;
+    }
+
+    .lenis.lenis-smooth [data-lenis-prevent] {
+      overscroll-behavior: contain;
+    }
+
+    .lenis.lenis-stopped {
+      overflow: hidden;
+    }
+
+    .lenis.lenis-scrolling iframe {
+      pointer-events: none;
     }
 
     body {
@@ -903,6 +920,67 @@
       font-size: 0.75rem;
     }
 
+    /* Scroll Reveal Animations */
+    .reveal {
+      opacity: 0;
+      transform: translateY(60px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-60px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal-left.active {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(60px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal-right.active {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .reveal-scale {
+      opacity: 0;
+      transform: scale(0.9);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal-scale.active {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .stagger-1 { transition-delay: 0.1s; }
+    .stagger-2 { transition-delay: 0.2s; }
+    .stagger-3 { transition-delay: 0.3s; }
+    .stagger-4 { transition-delay: 0.4s; }
+    .stagger-5 { transition-delay: 0.5s; }
+    .stagger-6 { transition-delay: 0.6s; }
+
+    /* Parallax */
+    .parallax-bg {
+      will-change: transform;
+    }
+
     /* Responsive */
     @media (max-width: 768px) {
       .hero {
@@ -1032,24 +1110,24 @@
   <!-- CC Automation Section -->
   <div id="automation">
     <div class="section">
-      <div class="section-header">
+      <div class="section-header reveal">
         <span class="company-badge green"><i class="fas fa-microchip"></i> CC Automation</span>
         <h2 class="section-title">Technology Solutions</h2>
         <p class="section-subtitle">Advanced systems for modern businesses</p>
       </div>
 
       <div class="services-grid">
-        <div class="service-card">
+        <div class="service-card reveal stagger-1">
           <div class="service-icon"><i class="fas fa-video"></i></div>
           <h3>CCTV Systems</h3>
           <p>High-definition surveillance solutions for complete peace of mind and security monitoring.</p>
         </div>
-        <div class="service-card">
+        <div class="service-card reveal stagger-2">
           <div class="service-icon"><i class="fas fa-print"></i></div>
           <h3>Copiers & Printers</h3>
           <p>Reliable, efficient and cost-effective office equipment solutions for your business needs.</p>
         </div>
-        <div class="service-card">
+        <div class="service-card reveal stagger-3">
           <div class="service-icon"><i class="fas fa-phone-volume"></i></div>
           <h3>PABX Systems</h3>
           <p>Smart communication infrastructure to keep your business connected and productive.</p>
@@ -1063,24 +1141,24 @@
   <!-- K Elektries Section -->
   <div id="electrical" class="section-alt">
     <div class="section">
-      <div class="section-header">
+      <div class="section-header reveal">
         <span class="company-badge green"><i class="fas fa-bolt"></i> K Elektries</span>
         <h2 class="section-title">Electrical Services</h2>
         <p class="section-subtitle">Professional electrical work for homes and businesses</p>
       </div>
 
       <div class="services-grid">
-        <div class="service-card">
+        <div class="service-card reveal stagger-1">
           <div class="service-icon"><i class="fas fa-plug"></i></div>
           <h3>Electrical Installation</h3>
           <p>Safe and professional electrical installations and maintenance for residential and commercial properties.</p>
         </div>
-        <div class="service-card">
+        <div class="service-card reveal stagger-2">
           <div class="service-icon"><i class="fas fa-solar-panel"></i></div>
           <h3>Solar & Inverter</h3>
           <p>Sustainable energy solutions including solar panel and inverter installation for a brighter future.</p>
         </div>
-        <div class="service-card">
+        <div class="service-card reveal stagger-3">
           <div class="service-icon"><i class="fas fa-certificate"></i></div>
           <h3>Certificate of Compliance</h3>
           <p>Official electrical compliance certificates for peace of mind and legal requirements.</p>
@@ -1094,39 +1172,39 @@
   <!-- CHC Projects Section -->
   <div id="security">
     <div class="section">
-      <div class="section-header">
+      <div class="section-header reveal">
         <span class="company-badge red"><i class="fas fa-shield-alt"></i> CHC Projects</span>
         <h2 class="section-title">Security Solutions</h2>
         <p class="section-subtitle">Securing what matters most</p>
       </div>
 
       <div class="services-grid">
-        <div class="service-card">
+        <div class="service-card reveal stagger-1">
           <div class="service-icon"><i class="fas fa-bolt"></i></div>
           <h3>Electric Fencing</h3>
           <p>Perimeter security with professional electric fence installation and maintenance.</p>
         </div>
-        <div class="service-card">
+        <div class="service-card reveal stagger-2">
           <div class="service-icon"><i class="fas fa-broadcast-tower"></i></div>
           <h3>Perimeter Beams</h3>
           <p>Infrared detection systems for comprehensive property monitoring.</p>
         </div>
-        <div class="service-card">
+        <div class="service-card reveal stagger-3">
           <div class="service-icon"><i class="fas fa-door-open"></i></div>
           <h3>Gate Motors</h3>
           <p>Automated gate systems for convenient and secure access control.</p>
         </div>
-        <div class="service-card">
+        <div class="service-card reveal stagger-4">
           <div class="service-icon"><i class="fas fa-fingerprint"></i></div>
           <h3>Biometrics</h3>
           <p>Advanced fingerprint and facial recognition access control systems.</p>
         </div>
-        <div class="service-card">
+        <div class="service-card reveal stagger-5">
           <div class="service-icon"><i class="fas fa-comments"></i></div>
           <h3>Intercom Systems</h3>
           <p>Communication and visitor management solutions for properties.</p>
         </div>
-        <div class="service-card">
+        <div class="service-card reveal stagger-6">
           <div class="service-icon"><i class="fas fa-sun"></i></div>
           <h3>Solar Solutions</h3>
           <p>Solar-powered security and energy systems for sustainable operation.</p>
@@ -1141,17 +1219,17 @@
     <p class="section-subtitle">Trusted by hundreds of homes and businesses across the Northern Cape</p>
 
     <div class="why-grid">
-      <div class="why-card">
+      <div class="why-card reveal stagger-1">
         <div class="why-icon"><i class="fas fa-award"></i></div>
         <h3>Industry Experts</h3>
         <p>Over 15 years of combined experience delivering exceptional solutions across automation, electrical, and security sectors.</p>
       </div>
-      <div class="why-card">
+      <div class="why-card reveal stagger-2">
         <div class="why-icon"><i class="fas fa-tools"></i></div>
         <h3>Quality Workmanship</h3>
         <p>We use only premium materials and industry-leading equipment, backed by comprehensive warranties on all installations.</p>
       </div>
-      <div class="why-card">
+      <div class="why-card reveal stagger-3">
         <div class="why-icon"><i class="fas fa-clock"></i></div>
         <h3>Reliable Support</h3>
         <p>24/7 emergency support and rapid response times. We're here when you need us, every time.</p>
@@ -1168,7 +1246,7 @@
       </div>
 
       <div class="testimonials-grid">
-        <div class="testimonial-card">
+        <div class="testimonial-card reveal stagger-1">
           <div class="testimonial-stars">
             <i class="fas fa-star"></i>
             <i class="fas fa-star"></i>
@@ -1186,7 +1264,7 @@
           </div>
         </div>
 
-        <div class="testimonial-card">
+        <div class="testimonial-card reveal stagger-2">
           <div class="testimonial-stars">
             <i class="fas fa-star"></i>
             <i class="fas fa-star"></i>
@@ -1204,7 +1282,7 @@
           </div>
         </div>
 
-        <div class="testimonial-card">
+        <div class="testimonial-card reveal stagger-3">
           <div class="testimonial-stars">
             <i class="fas fa-star"></i>
             <i class="fas fa-star"></i>
@@ -1234,28 +1312,28 @@
       </div>
 
       <div class="gallery-grid">
-        <div class="gallery-item">
+        <div class="gallery-item reveal-scale stagger-1">
           <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=400&fit=crop" alt="CCTV Installation">
         </div>
-        <div class="gallery-item">
+        <div class="gallery-item reveal-scale stagger-2">
           <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=400&h=400&fit=crop" alt="Solar Panels">
         </div>
-        <div class="gallery-item">
+        <div class="gallery-item reveal-scale stagger-3">
           <img src="https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=400&h=400&fit=crop" alt="Electrical Work">
         </div>
-        <div class="gallery-item">
+        <div class="gallery-item reveal-scale stagger-4">
           <img src="https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=400&h=400&fit=crop" alt="Security System">
         </div>
-        <div class="gallery-item">
+        <div class="gallery-item reveal-scale stagger-1">
           <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=400&h=400&fit=crop" alt="Office Installation">
         </div>
-        <div class="gallery-item">
+        <div class="gallery-item reveal-scale stagger-2">
           <img src="https://images.unsplash.com/photo-1558618047-f4b511ab9f78?w=400&h=400&fit=crop" alt="Gate Motor">
         </div>
-        <div class="gallery-item">
+        <div class="gallery-item reveal-scale stagger-3">
           <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=400&h=400&fit=crop" alt="Electrical Panel">
         </div>
-        <div class="gallery-item">
+        <div class="gallery-item reveal-scale stagger-4">
           <img src="https://images.unsplash.com/photo-1613665813446-82a78c468a1d?w=400&h=400&fit=crop" alt="Solar Installation">
         </div>
       </div>
@@ -1284,7 +1362,7 @@
 
       <div class="contact-wrapper">
         <div class="contact-grid">
-          <div class="contact-card">
+          <div class="contact-card reveal-left stagger-1">
             <div class="contact-card-icon"><i class="fas fa-microchip"></i></div>
             <div class="contact-card-info">
               <h3>Christo</h3>
@@ -1298,7 +1376,7 @@
             </div>
           </div>
 
-          <div class="contact-card">
+          <div class="contact-card reveal-left stagger-2">
             <div class="contact-card-icon"><i class="fas fa-bolt"></i></div>
             <div class="contact-card-info">
               <h3>Hennie</h3>
@@ -1311,7 +1389,7 @@
             </div>
           </div>
 
-          <div class="contact-card">
+          <div class="contact-card reveal-left stagger-3">
             <div class="contact-card-icon"><i class="fas fa-shield-alt"></i></div>
             <div class="contact-card-info">
               <h3>Coenie Genis</h3>
@@ -1326,7 +1404,7 @@
           </div>
         </div>
 
-        <div class="contact-form">
+        <div class="contact-form reveal-right">
           <h3>Send us a message</h3>
           <form action="https://formsubmit.co/christo@ccautomation.co.za" method="POST">
             <input type="hidden" name="_subject" value="New enquiry from CHC Group website">
@@ -1396,13 +1474,33 @@
 
   </div><!-- end page-content -->
 
+  <script src="https://unpkg.com/lenis@1.1.1/dist/lenis.min.js"></script>
   <script>
+    // Initialize Lenis smooth scroll
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      smoothWheel: true,
+      wheelMultiplier: 1,
+      touchMultiplier: 2,
+      infinite: false,
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
     // Preloader
     window.addEventListener('load', function() {
       setTimeout(function() {
         document.getElementById('preloader').classList.add('hidden');
         document.getElementById('pageContent').classList.add('loaded');
         startCounters();
+        initScrollReveal();
       }, 1200);
     });
 
@@ -1428,20 +1526,48 @@
       });
     }
 
-    // Smooth scroll for nav links
+    // Scroll Reveal
+    function initScrollReveal() {
+      const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+
+      const revealOnScroll = () => {
+        reveals.forEach(el => {
+          const windowHeight = window.innerHeight;
+          const elementTop = el.getBoundingClientRect().top;
+          const revealPoint = 150;
+
+          if (elementTop < windowHeight - revealPoint) {
+            el.classList.add('active');
+          }
+        });
+      };
+
+      lenis.on('scroll', revealOnScroll);
+      revealOnScroll();
+    }
+
+    // Smooth scroll for nav links using Lenis
     document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function(e) {
         e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
+        const targetId = this.getAttribute('href');
+        const target = document.querySelector(targetId);
         if (target) {
           const navHeight = document.querySelector('nav').offsetHeight;
-          const targetPosition = target.offsetTop - navHeight;
-          window.scrollTo({
-            top: targetPosition,
-            behavior: 'smooth'
+          lenis.scrollTo(target, {
+            offset: -navHeight,
+            duration: 1.5
           });
         }
       });
+    });
+
+    // Parallax effect on scroll
+    lenis.on('scroll', ({ scroll, velocity }) => {
+      const hero = document.querySelector('.hero');
+      if (hero) {
+        hero.style.backgroundPositionY = `${scroll * 0.3}px`;
+      }
     });
   </script>
 
