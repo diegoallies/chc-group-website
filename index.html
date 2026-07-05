@@ -14,6 +14,10 @@
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       color: #1a1a1a;
@@ -105,7 +109,6 @@
       to { opacity: 1; }
     }
 
-    /* Page content fade in */
     .page-content {
       opacity: 0;
       transition: opacity 0.5s ease;
@@ -115,13 +118,51 @@
       opacity: 1;
     }
 
+    /* Floating WhatsApp Button */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 60px;
+      height: 60px;
+      background: #25d366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.75rem;
+      box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+      z-index: 1000;
+      transition: transform 0.3s, box-shadow 0.3s;
+      text-decoration: none;
+    }
+
+    .whatsapp-float:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 30px rgba(37, 211, 102, 0.5);
+    }
+
     /* Hero Section */
     .hero {
-      background: #0f1419;
+      background: linear-gradient(135deg, rgba(15, 20, 25, 0.95) 0%, rgba(15, 20, 25, 0.85) 100%),
+                  url('https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=1920&q=80') center/cover;
       color: white;
-      padding: 100px 40px;
+      padding: 120px 40px;
       text-align: center;
       position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at 30% 50%, rgba(34, 197, 94, 0.1) 0%, transparent 50%);
+      pointer-events: none;
     }
 
     .hero::after {
@@ -137,6 +178,8 @@
     .hero-content {
       max-width: 1000px;
       margin: 0 auto;
+      position: relative;
+      z-index: 1;
     }
 
     .hero-label {
@@ -177,12 +220,48 @@
       font-size: 0.9rem;
       font-weight: 500;
       color: #e5e7eb;
-      transition: all 0.2s;
+      transition: all 0.3s;
+      cursor: default;
     }
 
     .brand-pill:hover {
-      border-color: #6b7280;
-      background: rgba(255,255,255,0.02);
+      border-color: #22c55e;
+      background: rgba(34, 197, 94, 0.1);
+      color: #22c55e;
+    }
+
+    /* Stats Section */
+    .stats-section {
+      background: #111;
+      padding: 60px 40px;
+    }
+
+    .stats-grid {
+      display: flex;
+      justify-content: center;
+      gap: 80px;
+      flex-wrap: wrap;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 3rem;
+      font-weight: 700;
+      color: #22c55e;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .stat-label {
+      font-size: 0.875rem;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
 
     /* Navigation */
@@ -217,7 +296,7 @@
 
     nav a:hover {
       color: #111;
-      border-bottom-color: #111;
+      border-bottom-color: #22c55e;
     }
 
     /* Section Styles */
@@ -261,27 +340,24 @@
     }
 
     @media (max-width: 900px) {
-      .services-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
     }
 
     @media (max-width: 600px) {
-      .services-grid {
-        grid-template-columns: 1fr;
-      }
+      .services-grid { grid-template-columns: 1fr; }
     }
 
     .service-card {
       padding: 32px;
       border: 1px solid #e5e7eb;
       border-radius: 12px;
-      transition: all 0.2s;
+      transition: all 0.3s ease;
     }
 
     .service-card:hover {
-      border-color: #d1d5db;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+      transform: translateY(-4px);
+      border-color: #22c55e;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.08);
     }
 
     .service-icon {
@@ -295,6 +371,12 @@
       margin-bottom: 20px;
       color: #374151;
       font-size: 1.25rem;
+      transition: all 0.3s;
+    }
+
+    .service-card:hover .service-icon {
+      background: #22c55e;
+      color: white;
     }
 
     .service-card h3 {
@@ -323,10 +405,6 @@
       background: #fafafa;
     }
 
-    .section-alt .section {
-      padding: 100px 40px;
-    }
-
     /* Company Badge */
     .company-badge {
       display: inline-flex;
@@ -353,9 +431,198 @@
       color: #991b1b;
     }
 
+    /* Why Choose Us */
+    .why-section {
+      background: linear-gradient(135deg, #0f1419 0%, #1a1f26 100%);
+      padding: 100px 40px;
+    }
+
+    .why-section .section-title {
+      color: #fff;
+      text-align: center;
+    }
+
+    .why-section .section-subtitle {
+      color: #9ca3af;
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 900px) {
+      .why-grid { grid-template-columns: 1fr; }
+    }
+
+    .why-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 40px 30px;
+      text-align: center;
+      transition: all 0.3s;
+    }
+
+    .why-card:hover {
+      background: rgba(255,255,255,0.05);
+      border-color: rgba(34, 197, 94, 0.3);
+      transform: translateY(-4px);
+    }
+
+    .why-icon {
+      width: 64px;
+      height: 64px;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      font-size: 1.5rem;
+      color: white;
+    }
+
+    .why-card h3 {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+
+    .why-card p {
+      font-size: 0.875rem;
+      color: #9ca3af;
+      line-height: 1.6;
+    }
+
+    /* Testimonials */
+    .testimonials-section {
+      padding: 100px 40px;
+      background: #fafafa;
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 900px) {
+      .testimonials-grid { grid-template-columns: 1fr; }
+    }
+
+    .testimonial-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.04);
+    }
+
+    .testimonial-stars {
+      color: #fbbf24;
+      margin-bottom: 16px;
+      font-size: 0.875rem;
+    }
+
+    .testimonial-text {
+      font-size: 0.95rem;
+      color: #374151;
+      line-height: 1.7;
+      margin-bottom: 24px;
+      font-style: italic;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .testimonial-avatar {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    .testimonial-info h4 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #111;
+    }
+
+    .testimonial-info p {
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    /* Gallery */
+    .gallery-section {
+      padding: 100px 40px;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 900px) {
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .gallery-item {
+      aspect-ratio: 1;
+      background: #e5e7eb;
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.1);
+    }
+
+    .gallery-item::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.5), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .gallery-item:hover::after {
+      opacity: 1;
+    }
+
     /* Contact Section */
     .contact-section {
-      background: #0f1419;
+      background: linear-gradient(135deg, #0f1419 0%, #1a1f26 100%);
       padding: 100px 40px;
     }
 
@@ -371,67 +638,201 @@
       color: #9ca3af;
     }
 
-    .contact-grid {
+    .contact-wrapper {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
       max-width: 1200px;
       margin: 0 auto;
     }
 
     @media (max-width: 900px) {
-      .contact-grid {
-        grid-template-columns: 1fr;
-      }
+      .contact-wrapper { grid-template-columns: 1fr; }
+    }
+
+    .contact-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
     }
 
     .contact-card {
       background: #1a1f26;
       border: 1px solid #2d333b;
       border-radius: 12px;
-      padding: 32px;
+      padding: 28px;
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      transition: all 0.3s;
     }
 
-    .contact-card-header {
-      margin-bottom: 24px;
-      padding-bottom: 24px;
-      border-bottom: 1px solid #2d333b;
+    .contact-card:hover {
+      border-color: #22c55e;
+      background: #1f252c;
     }
 
-    .contact-card h3 {
-      font-size: 1.125rem;
+    .contact-card-icon {
+      width: 48px;
+      height: 48px;
+      background: rgba(34, 197, 94, 0.1);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #22c55e;
+      font-size: 1.25rem;
+      flex-shrink: 0;
+    }
+
+    .contact-card-info h3 {
+      font-size: 1rem;
       font-weight: 600;
       color: #fff;
       margin-bottom: 4px;
     }
 
-    .contact-card .role {
-      font-size: 0.875rem;
+    .contact-card-info .role {
+      font-size: 0.8rem;
       color: #6b7280;
+      margin-bottom: 12px;
     }
 
-    .contact-item {
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .contact-links a {
       display: flex;
       align-items: center;
-      gap: 12px;
-      margin: 16px 0;
-    }
-
-    .contact-item i {
-      width: 18px;
-      color: #6b7280;
-      font-size: 0.875rem;
-    }
-
-    .contact-item a {
-      color: #e5e7eb;
+      gap: 8px;
+      color: #9ca3af;
       text-decoration: none;
       font-size: 0.875rem;
       transition: color 0.2s;
     }
 
-    .contact-item a:hover {
+    .contact-links a:hover {
+      color: #22c55e;
+    }
+
+    .contact-links i {
+      width: 16px;
+      font-size: 0.8rem;
+    }
+
+    .whatsapp-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 12px;
+      padding: 8px 16px;
+      background: #25d366;
+      color: white;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .whatsapp-btn:hover {
+      background: #22c55e;
+      transform: translateY(-1px);
+    }
+
+    /* Contact Form */
+    .contact-form {
+      background: #1a1f26;
+      border: 1px solid #2d333b;
+      border-radius: 16px;
+      padding: 40px;
+    }
+
+    .contact-form h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
       color: #fff;
+      margin-bottom: 24px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #9ca3af;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 14px 16px;
+      background: #0f1419;
+      border: 1px solid #2d333b;
+      border-radius: 8px;
+      color: #fff;
+      font-family: inherit;
+      font-size: 0.95rem;
+      transition: border-color 0.2s;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: #22c55e;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .form-submit {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .form-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(34, 197, 94, 0.3);
+    }
+
+    /* Map Section */
+    .map-section {
+      height: 400px;
+      background: #e5e7eb;
+    }
+
+    .map-section iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      filter: grayscale(100%) contrast(1.1);
+      transition: filter 0.3s;
+    }
+
+    .map-section:hover iframe {
+      filter: grayscale(0%);
     }
 
     /* Location Bar */
@@ -452,7 +853,7 @@
     }
 
     .location-bar i {
-      color: #6b7280;
+      color: #22c55e;
     }
 
     /* Values Bar */
@@ -481,7 +882,7 @@
 
     .value-item i {
       font-size: 0.9rem;
-      color: #6b7280;
+      color: #22c55e;
     }
 
     /* Footer */
@@ -505,7 +906,7 @@
     /* Responsive */
     @media (max-width: 768px) {
       .hero {
-        padding: 60px 24px;
+        padding: 80px 24px;
       }
 
       .hero h1 {
@@ -522,11 +923,17 @@
 
       nav {
         padding: 0 16px;
+        overflow-x: auto;
+      }
+
+      nav ul {
+        justify-content: flex-start;
       }
 
       nav a {
         padding: 16px 20px;
         font-size: 0.8rem;
+        white-space: nowrap;
       }
 
       .section-title {
@@ -535,6 +942,25 @@
 
       .values-list {
         gap: 24px;
+      }
+
+      .stats-grid {
+        gap: 40px;
+      }
+
+      .stat-number {
+        font-size: 2.25rem;
+      }
+
+      .whatsapp-float {
+        bottom: 20px;
+        right: 20px;
+        width: 56px;
+        height: 56px;
+      }
+
+      .contact-form {
+        padding: 24px;
       }
     }
   </style>
@@ -547,6 +973,11 @@
     <div class="preloader-spinner"></div>
     <div class="preloader-text">Loading</div>
   </div>
+
+  <!-- Floating WhatsApp Button -->
+  <a href="https://wa.me/27823085053" target="_blank" class="whatsapp-float" title="Chat with us">
+    <i class="fab fa-whatsapp"></i>
+  </a>
 
   <div class="page-content" id="pageContent">
 
@@ -565,12 +996,35 @@
     </div>
   </section>
 
+  <!-- Stats Section -->
+  <section class="stats-section">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-number" data-target="15">0</div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number" data-target="500">0</div>
+        <div class="stat-label">Projects Completed</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number" data-target="350">0</div>
+        <div class="stat-label">Happy Clients</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number" data-target="24">0</div>
+        <div class="stat-label">Support Hours</div>
+      </div>
+    </div>
+  </section>
+
   <!-- Navigation -->
   <nav>
     <ul>
       <li><a href="#automation">Automation</a></li>
       <li><a href="#electrical">Electrical</a></li>
       <li><a href="#security">Security</a></li>
+      <li><a href="#gallery">Gallery</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
@@ -681,6 +1135,133 @@
     </div>
   </div>
 
+  <!-- Why Choose Us -->
+  <section class="why-section">
+    <h2 class="section-title">Why Choose Us?</h2>
+    <p class="section-subtitle">Trusted by hundreds of homes and businesses across the Northern Cape</p>
+
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-icon"><i class="fas fa-award"></i></div>
+        <h3>Industry Experts</h3>
+        <p>Over 15 years of combined experience delivering exceptional solutions across automation, electrical, and security sectors.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon"><i class="fas fa-tools"></i></div>
+        <h3>Quality Workmanship</h3>
+        <p>We use only premium materials and industry-leading equipment, backed by comprehensive warranties on all installations.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon"><i class="fas fa-clock"></i></div>
+        <h3>Reliable Support</h3>
+        <p>24/7 emergency support and rapid response times. We're here when you need us, every time.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="testimonials-section">
+    <div style="max-width: 1200px; margin: 0 auto;">
+      <div class="section-header" style="text-align: center;">
+        <p class="section-label">Testimonials</p>
+        <h2 class="section-title">What Our Clients Say</h2>
+      </div>
+
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <div class="testimonial-stars">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
+          <p class="testimonial-text">"Professional service from start to finish. The CCTV system they installed gives us complete peace of mind. Highly recommend CC Automation!"</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">JV</div>
+            <div class="testimonial-info">
+              <h4>Johan van der Merwe</h4>
+              <p>Business Owner</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="testimonial-stars">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
+          <p class="testimonial-text">"K Elektries installed our solar system and we've seen a massive reduction in electricity costs. Professional team and great after-sales support."</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">SM</div>
+            <div class="testimonial-info">
+              <h4>Sarah Mokoena</h4>
+              <p>Homeowner</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="testimonial-stars">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
+          <p class="testimonial-text">"CHC Projects secured our entire property with electric fencing and biometric access. The installation was quick and the quality is excellent."</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">PD</div>
+            <div class="testimonial-info">
+              <h4>Pieter du Plessis</h4>
+              <p>Farm Owner</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <section id="gallery" class="gallery-section">
+    <div style="max-width: 1200px; margin: 0 auto;">
+      <div class="section-header" style="text-align: center;">
+        <p class="section-label">Our Work</p>
+        <h2 class="section-title">Project Gallery</h2>
+      </div>
+
+      <div class="gallery-grid">
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=400&fit=crop" alt="CCTV Installation">
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=400&h=400&fit=crop" alt="Solar Panels">
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=400&h=400&fit=crop" alt="Electrical Work">
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=400&h=400&fit=crop" alt="Security System">
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=400&h=400&fit=crop" alt="Office Installation">
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1558618047-f4b511ab9f78?w=400&h=400&fit=crop" alt="Gate Motor">
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=400&h=400&fit=crop" alt="Electrical Panel">
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1613665813446-82a78c468a1d?w=400&h=400&fit=crop" alt="Solar Installation">
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Values Bar -->
   <div class="values-bar">
     <div class="values-list">
@@ -695,68 +1276,112 @@
   <!-- Contact Section -->
   <section id="contact" class="contact-section">
     <div style="max-width: 1200px; margin: 0 auto;">
-      <div class="section-header" style="text-align: center; margin-bottom: 50px;">
+      <div class="section-header" style="text-align: center; margin-bottom: 60px;">
         <p class="section-label">Get in Touch</p>
         <h2 class="section-title">Contact Our Team</h2>
         <p class="section-subtitle">Reach out for a free consultation</p>
       </div>
 
-      <div class="contact-grid">
-        <div class="contact-card">
-          <div class="contact-card-header">
-            <h3>Christo</h3>
-            <p class="role">CC Automation</p>
+      <div class="contact-wrapper">
+        <div class="contact-grid">
+          <div class="contact-card">
+            <div class="contact-card-icon"><i class="fas fa-microchip"></i></div>
+            <div class="contact-card-info">
+              <h3>Christo</h3>
+              <p class="role">CC Automation</p>
+              <div class="contact-links">
+                <a href="tel:0538614609"><i class="fas fa-phone"></i> 053 861 4609</a>
+                <a href="tel:0823085053"><i class="fas fa-mobile-alt"></i> 082 308 5053</a>
+                <a href="mailto:christo@ccautomation.co.za"><i class="fas fa-envelope"></i> christo@ccautomation.co.za</a>
+              </div>
+              <a href="https://wa.me/27823085053" target="_blank" class="whatsapp-btn"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            </div>
           </div>
-          <div class="contact-item">
-            <i class="fas fa-phone"></i>
-            <a href="tel:0538614609">053 861 4609</a>
+
+          <div class="contact-card">
+            <div class="contact-card-icon"><i class="fas fa-bolt"></i></div>
+            <div class="contact-card-info">
+              <h3>Hennie</h3>
+              <p class="role">K Elektries</p>
+              <div class="contact-links">
+                <a href="tel:0836099135"><i class="fas fa-mobile-alt"></i> 083 609 9135</a>
+                <a href="mailto:henniecroucamp2@gmail.com"><i class="fas fa-envelope"></i> henniecroucamp2@gmail.com</a>
+              </div>
+              <a href="https://wa.me/27836099135" target="_blank" class="whatsapp-btn"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            </div>
           </div>
-          <div class="contact-item">
-            <i class="fas fa-mobile-alt"></i>
-            <a href="tel:0823085053">082 308 5053</a>
-          </div>
-          <div class="contact-item">
-            <i class="fas fa-envelope"></i>
-            <a href="mailto:christo@ccautomation.co.za">christo@ccautomation.co.za</a>
+
+          <div class="contact-card">
+            <div class="contact-card-icon"><i class="fas fa-shield-alt"></i></div>
+            <div class="contact-card-info">
+              <h3>Coenie Genis</h3>
+              <p class="role">CHC Projects</p>
+              <div class="contact-links">
+                <a href="tel:0640139766"><i class="fas fa-phone"></i> 064 013 9766</a>
+                <a href="tel:0605593413"><i class="fas fa-mobile-alt"></i> 060 559 3413</a>
+                <a href="mailto:chcprojectskby@gmail.com"><i class="fas fa-envelope"></i> chcprojectskby@gmail.com</a>
+              </div>
+              <a href="https://wa.me/27640139766" target="_blank" class="whatsapp-btn"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            </div>
           </div>
         </div>
 
-        <div class="contact-card">
-          <div class="contact-card-header">
-            <h3>Hennie</h3>
-            <p class="role">K Elektries</p>
-          </div>
-          <div class="contact-item">
-            <i class="fas fa-mobile-alt"></i>
-            <a href="tel:0836099135">083 609 9135</a>
-          </div>
-          <div class="contact-item">
-            <i class="fas fa-envelope"></i>
-            <a href="mailto:henniecroucamp2@gmail.com">henniecroucamp2@gmail.com</a>
-          </div>
-        </div>
-
-        <div class="contact-card">
-          <div class="contact-card-header">
-            <h3>Coenie Genis</h3>
-            <p class="role">CHC Projects</p>
-          </div>
-          <div class="contact-item">
-            <i class="fas fa-phone"></i>
-            <a href="tel:0640139766">064 013 9766</a>
-          </div>
-          <div class="contact-item">
-            <i class="fas fa-mobile-alt"></i>
-            <a href="tel:0605593413">060 559 3413</a>
-          </div>
-          <div class="contact-item">
-            <i class="fas fa-envelope"></i>
-            <a href="mailto:chcprojectskby@gmail.com">chcprojectskby@gmail.com</a>
-          </div>
+        <div class="contact-form">
+          <h3>Send us a message</h3>
+          <form action="https://formsubmit.co/christo@ccautomation.co.za" method="POST">
+            <input type="hidden" name="_subject" value="New enquiry from CHC Group website">
+            <input type="hidden" name="_captcha" value="false">
+            <div class="form-group">
+              <label>Your Name</label>
+              <input type="text" name="name" required placeholder="John Smith">
+            </div>
+            <div class="form-group">
+              <label>Phone Number</label>
+              <input type="tel" name="phone" required placeholder="082 123 4567">
+            </div>
+            <div class="form-group">
+              <label>Email Address</label>
+              <input type="email" name="email" required placeholder="john@example.com">
+            </div>
+            <div class="form-group">
+              <label>Service Required</label>
+              <select name="service" required>
+                <option value="">Select a service...</option>
+                <optgroup label="CC Automation">
+                  <option value="CCTV Systems">CCTV Systems</option>
+                  <option value="Copiers & Printers">Copiers & Printers</option>
+                  <option value="PABX Systems">PABX Systems</option>
+                </optgroup>
+                <optgroup label="K Elektries">
+                  <option value="Electrical Installation">Electrical Installation</option>
+                  <option value="Solar & Inverter">Solar & Inverter</option>
+                  <option value="Certificate of Compliance">Certificate of Compliance</option>
+                </optgroup>
+                <optgroup label="CHC Projects">
+                  <option value="Electric Fencing">Electric Fencing</option>
+                  <option value="Perimeter Beams">Perimeter Beams</option>
+                  <option value="Gate Motors">Gate Motors</option>
+                  <option value="Biometrics">Biometrics</option>
+                  <option value="Intercom Systems">Intercom Systems</option>
+                </optgroup>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Message</label>
+              <textarea name="message" required placeholder="Tell us about your project..."></textarea>
+            </div>
+            <button type="submit" class="form-submit">Send Message</button>
+          </form>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- Map -->
+  <div class="map-section">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3544.8234567890123!2d24.7711!3d-28.7282!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sSchmidtsdrift%20Road%2C%20Rhodesdene%2C%20Kimberley!5e0!3m2!1sen!2sza!4v1234567890" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </div>
 
   <!-- Location Bar -->
   <div class="location-bar">
@@ -772,11 +1397,51 @@
   </div><!-- end page-content -->
 
   <script>
+    // Preloader
     window.addEventListener('load', function() {
       setTimeout(function() {
         document.getElementById('preloader').classList.add('hidden');
         document.getElementById('pageContent').classList.add('loaded');
+        startCounters();
       }, 1200);
+    });
+
+    // Animated Counters
+    function startCounters() {
+      const counters = document.querySelectorAll('.stat-number');
+      const speed = 100;
+
+      counters.forEach(counter => {
+        const target = +counter.getAttribute('data-target');
+        const increment = target / speed;
+
+        const updateCount = () => {
+          const count = +counter.innerText;
+          if (count < target) {
+            counter.innerText = Math.ceil(count + increment);
+            setTimeout(updateCount, 20);
+          } else {
+            counter.innerText = target + (target === 24 ? '/7' : '+');
+          }
+        };
+        updateCount();
+      });
+    }
+
+    // Smooth scroll for nav links
+    document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          const navHeight = document.querySelector('nav').offsetHeight;
+          const targetPosition = target.offsetTop - navHeight;
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+          });
+        }
+      });
     });
   </script>
 
