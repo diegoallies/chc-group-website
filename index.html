@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CHC Group | Powering Your World</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: #1a1a1a;
+      line-height: 1.6;
+      background: #fff;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Preloader */
+    .preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #0f1419;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+
+    .preloader.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .preloader-logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 40px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    .preloader-spinner {
+      width: 40px;
+      height: 40px;
+      position: relative;
+    }
+
+    .preloader-spinner::before,
+    .preloader-spinner::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+    }
+
+    .preloader-spinner::before {
+      width: 100%;
+      height: 100%;
+      border: 2px solid rgba(255,255,255,0.1);
+    }
+
+    .preloader-spinner::after {
+      width: 100%;
+      height: 100%;
+      border: 2px solid transparent;
+      border-top-color: #fff;
+      animation: spin 0.8s linear infinite;
+    }
+
+    .preloader-text {
+      margin-top: 30px;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: #6b7280;
+      opacity: 0;
+      animation: fadeIn 0.6s ease 0.3s forwards;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    /* Page content fade in */
+    .page-content {
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .page-content.loaded {
+      opacity: 1;
+    }
+
+    /* Hero Section */
+    .hero {
+      background: #0f1419;
+      color: white;
+      padding: 100px 40px;
+      text-align: center;
+      position: relative;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    }
+
+    .hero-content {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .hero-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: #6b7280;
+      margin-bottom: 20px;
+      font-weight: 500;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      letter-spacing: -1px;
+      line-height: 1.1;
+    }
+
+    .hero .tagline {
+      font-size: 1.25rem;
+      font-weight: 400;
+      color: #9ca3af;
+      margin-bottom: 50px;
+    }
+
+    .brand-pills {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .brand-pill {
+      padding: 12px 28px;
+      border: 1px solid #374151;
+      border-radius: 100px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #e5e7eb;
+      transition: all 0.2s;
+    }
+
+    .brand-pill:hover {
+      border-color: #6b7280;
+      background: rgba(255,255,255,0.02);
+    }
+
+    /* Navigation */
+    nav {
+      background: #fff;
+      padding: 0 40px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    nav a {
+      display: block;
+      text-decoration: none;
+      color: #6b7280;
+      font-weight: 500;
+      font-size: 0.875rem;
+      padding: 20px 32px;
+      transition: all 0.2s;
+      border-bottom: 2px solid transparent;
+    }
+
+    nav a:hover {
+      color: #111;
+      border-bottom-color: #111;
+    }
+
+    /* Section Styles */
+    .section {
+      padding: 100px 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      margin-bottom: 60px;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #6b7280;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .section-title {
+      font-size: 2.25rem;
+      font-weight: 700;
+      color: #111;
+      letter-spacing: -0.5px;
+    }
+
+    .section-subtitle {
+      font-size: 1rem;
+      color: #6b7280;
+      margin-top: 8px;
+    }
+
+    /* Services Grid */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    @media (max-width: 900px) {
+      .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .service-card {
+      padding: 32px;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      transition: all 0.2s;
+    }
+
+    .service-card:hover {
+      border-color: #d1d5db;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+    }
+
+    .service-icon {
+      width: 48px;
+      height: 48px;
+      background: #f3f4f6;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      color: #374151;
+      font-size: 1.25rem;
+    }
+
+    .service-card h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #111;
+      margin-bottom: 8px;
+    }
+
+    .service-card p {
+      font-size: 0.875rem;
+      color: #6b7280;
+      line-height: 1.5;
+    }
+
+    /* Divider */
+    .divider {
+      height: 1px;
+      background: #e5e7eb;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Alt Background */
+    .section-alt {
+      background: #fafafa;
+    }
+
+    .section-alt .section {
+      padding: 100px 40px;
+    }
+
+    /* Company Badge */
+    .company-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background: #f3f4f6;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #374151;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+    }
+
+    .company-badge.green {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .company-badge.red {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    /* Contact Section */
+    .contact-section {
+      background: #0f1419;
+      padding: 100px 40px;
+    }
+
+    .contact-section .section-label {
+      color: #6b7280;
+    }
+
+    .contact-section .section-title {
+      color: #fff;
+    }
+
+    .contact-section .section-subtitle {
+      color: #9ca3af;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 900px) {
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .contact-card {
+      background: #1a1f26;
+      border: 1px solid #2d333b;
+      border-radius: 12px;
+      padding: 32px;
+    }
+
+    .contact-card-header {
+      margin-bottom: 24px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid #2d333b;
+    }
+
+    .contact-card h3 {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .contact-card .role {
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 16px 0;
+    }
+
+    .contact-item i {
+      width: 18px;
+      color: #6b7280;
+      font-size: 0.875rem;
+    }
+
+    .contact-item a {
+      color: #e5e7eb;
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: color 0.2s;
+    }
+
+    .contact-item a:hover {
+      color: #fff;
+    }
+
+    /* Location Bar */
+    .location-bar {
+      background: #f9fafb;
+      border-top: 1px solid #e5e7eb;
+      padding: 40px;
+      text-align: center;
+    }
+
+    .location-bar p {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      color: #374151;
+      font-size: 0.9rem;
+    }
+
+    .location-bar i {
+      color: #6b7280;
+    }
+
+    /* Values Bar */
+    .values-bar {
+      background: #111;
+      padding: 40px;
+    }
+
+    .values-list {
+      display: flex;
+      justify-content: center;
+      gap: 48px;
+      flex-wrap: wrap;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .value-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #9ca3af;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    .value-item i {
+      font-size: 0.9rem;
+      color: #6b7280;
+    }
+
+    /* Footer */
+    footer {
+      background: #0a0c0f;
+      padding: 40px;
+      text-align: center;
+    }
+
+    footer .tagline {
+      color: #6b7280;
+      font-size: 0.875rem;
+      margin-bottom: 8px;
+    }
+
+    footer .copyright {
+      color: #4b5563;
+      font-size: 0.75rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero {
+        padding: 60px 24px;
+      }
+
+      .hero h1 {
+        font-size: 2.25rem;
+      }
+
+      .hero .tagline {
+        font-size: 1rem;
+      }
+
+      .section {
+        padding: 60px 24px;
+      }
+
+      nav {
+        padding: 0 16px;
+      }
+
+      nav a {
+        padding: 16px 20px;
+        font-size: 0.8rem;
+      }
+
+      .section-title {
+        font-size: 1.75rem;
+      }
+
+      .values-list {
+        gap: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Preloader -->
+  <div class="preloader" id="preloader">
+    <div class="preloader-logo">CHC Group</div>
+    <div class="preloader-spinner"></div>
+    <div class="preloader-text">Loading</div>
+  </div>
+
+  <div class="page-content" id="pageContent">
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <p class="hero-label">Kimberley, Northern Cape</p>
+      <h1>Powering Your World</h1>
+      <p class="tagline">Smart solutions for a connected and powered future</p>
+
+      <div class="brand-pills">
+        <span class="brand-pill">CC Automation</span>
+        <span class="brand-pill">K Elektries</span>
+        <span class="brand-pill">CHC Projects</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Navigation -->
+  <nav>
+    <ul>
+      <li><a href="#automation">Automation</a></li>
+      <li><a href="#electrical">Electrical</a></li>
+      <li><a href="#security">Security</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- CC Automation Section -->
+  <div id="automation">
+    <div class="section">
+      <div class="section-header">
+        <span class="company-badge green"><i class="fas fa-microchip"></i> CC Automation</span>
+        <h2 class="section-title">Technology Solutions</h2>
+        <p class="section-subtitle">Advanced systems for modern businesses</p>
+      </div>
+
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon"><i class="fas fa-video"></i></div>
+          <h3>CCTV Systems</h3>
+          <p>High-definition surveillance solutions for complete peace of mind and security monitoring.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon"><i class="fas fa-print"></i></div>
+          <h3>Copiers & Printers</h3>
+          <p>Reliable, efficient and cost-effective office equipment solutions for your business needs.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon"><i class="fas fa-phone-volume"></i></div>
+          <h3>PABX Systems</h3>
+          <p>Smart communication infrastructure to keep your business connected and productive.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- K Elektries Section -->
+  <div id="electrical" class="section-alt">
+    <div class="section">
+      <div class="section-header">
+        <span class="company-badge green"><i class="fas fa-bolt"></i> K Elektries</span>
+        <h2 class="section-title">Electrical Services</h2>
+        <p class="section-subtitle">Professional electrical work for homes and businesses</p>
+      </div>
+
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon"><i class="fas fa-plug"></i></div>
+          <h3>Electrical Installation</h3>
+          <p>Safe and professional electrical installations and maintenance for residential and commercial properties.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon"><i class="fas fa-solar-panel"></i></div>
+          <h3>Solar & Inverter</h3>
+          <p>Sustainable energy solutions including solar panel and inverter installation for a brighter future.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon"><i class="fas fa-certificate"></i></div>
+          <h3>Certificate of Compliance</h3>
+          <p>Official electrical compliance certificates for peace of mind and legal requirements.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- CHC Projects Section -->
+  <div id="security">
+    <div class="section">
+      <div class="section-header">
+        <span class="company-badge red"><i class="fas fa-shield-alt"></i> CHC Projects</span>
+        <h2 class="section-title">Security Solutions</h2>
+        <p class="section-subtitle">Securing what matters most</p>
+      </div>
+
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon"><i class="fas fa-bolt"></i></div>
+          <h3>Electric Fencing</h3>
+          <p>Perimeter security with professional electric fence installation and maintenance.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon"><i class="fas fa-broadcast-tower"></i></div>
+          <h3>Perimeter Beams</h3>
+          <p>Infrared detection systems for comprehensive property monitoring.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon"><i class="fas fa-door-open"></i></div>
+          <h3>Gate Motors</h3>
+          <p>Automated gate systems for convenient and secure access control.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon"><i class="fas fa-fingerprint"></i></div>
+          <h3>Biometrics</h3>
+          <p>Advanced fingerprint and facial recognition access control systems.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon"><i class="fas fa-comments"></i></div>
+          <h3>Intercom Systems</h3>
+          <p>Communication and visitor management solutions for properties.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon"><i class="fas fa-sun"></i></div>
+          <h3>Solar Solutions</h3>
+          <p>Solar-powered security and energy systems for sustainable operation.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Values Bar -->
+  <div class="values-bar">
+    <div class="values-list">
+      <div class="value-item"><i class="fas fa-medal"></i> Quality Products</div>
+      <div class="value-item"><i class="fas fa-tools"></i> Expert Installation</div>
+      <div class="value-item"><i class="fas fa-headset"></i> Reliable Support</div>
+      <div class="value-item"><i class="fas fa-check-circle"></i> Certified Work</div>
+      <div class="value-item"><i class="fas fa-leaf"></i> Energy Efficient</div>
+    </div>
+  </div>
+
+  <!-- Contact Section -->
+  <section id="contact" class="contact-section">
+    <div style="max-width: 1200px; margin: 0 auto;">
+      <div class="section-header" style="text-align: center; margin-bottom: 50px;">
+        <p class="section-label">Get in Touch</p>
+        <h2 class="section-title">Contact Our Team</h2>
+        <p class="section-subtitle">Reach out for a free consultation</p>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-card">
+          <div class="contact-card-header">
+            <h3>Christo</h3>
+            <p class="role">CC Automation</p>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-phone"></i>
+            <a href="tel:0538614609">053 861 4609</a>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-mobile-alt"></i>
+            <a href="tel:0823085053">082 308 5053</a>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-envelope"></i>
+            <a href="mailto:christo@ccautomation.co.za">christo@ccautomation.co.za</a>
+          </div>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-card-header">
+            <h3>Hennie</h3>
+            <p class="role">K Elektries</p>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-mobile-alt"></i>
+            <a href="tel:0836099135">083 609 9135</a>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-envelope"></i>
+            <a href="mailto:henniecroucamp2@gmail.com">henniecroucamp2@gmail.com</a>
+          </div>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-card-header">
+            <h3>Coenie Genis</h3>
+            <p class="role">CHC Projects</p>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-phone"></i>
+            <a href="tel:0640139766">064 013 9766</a>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-mobile-alt"></i>
+            <a href="tel:0605593413">060 559 3413</a>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-envelope"></i>
+            <a href="mailto:chcprojectskby@gmail.com">chcprojectskby@gmail.com</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Location Bar -->
+  <div class="location-bar">
+    <p><i class="fas fa-map-marker-alt"></i> 11B Schmidtsdrift Road, Rhodesdene, Kimberley</p>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p class="tagline">Innovation. Reliability. Excellence.</p>
+    <p class="copyright">2026 CHC Group. All rights reserved.</p>
+  </footer>
+
+  </div><!-- end page-content -->
+
+  <script>
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        document.getElementById('preloader').classList.add('hidden');
+        document.getElementById('pageContent').classList.add('loaded');
+      }, 1200);
+    });
+  </script>
+
+</body>
+</html>
